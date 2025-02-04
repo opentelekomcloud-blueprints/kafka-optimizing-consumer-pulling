@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/IBM/sarama"
 	"log/slog"
-	"math/rand"
 	"os"
 	"os/signal"
 	"sync"
@@ -82,8 +81,6 @@ func newProducer(ctx context.Context) {
 	config.Producer.Idempotent = true
 	config.Version = sarama.V2_7_0_0
 	config.Net.MaxOpenRequests = 1
-
-	rand.Seed(time.Now().UnixNano()) // Seed to ensure randomness
 
 	logger.Info("creating a producer...")
 	producer, err := sarama.NewSyncProducer([]string{brokerAddress}, config)
