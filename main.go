@@ -128,6 +128,7 @@ func newConsumer(ctx context.Context, consumerId int, wg *sync.WaitGroup) {
 	config := sarama.NewConfig()
 	config.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategyRoundRobin()}
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+	config.Consumer.MaxWaitTime = 500 * time.Millisecond
 
 	logger.Info("creating a consumer group...", "consumer-group", groupID, "consumer-id", consumerId)
 	consumerGroup, err := sarama.NewConsumerGroup([]string{brokerAddress}, groupID, config)
